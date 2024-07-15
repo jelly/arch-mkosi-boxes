@@ -1,0 +1,14 @@
+[Unit]
+Description=Initializes Pacman keyring
+Before=sshd.service cloud-final.service archlinux-keyring-wkd-sync.service
+After=time-sync.target
+ConditionFirstBoot=yes
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/pacman-key --init
+ExecStart=/usr/bin/pacman-key --populate
+
+[Install]
+WantedBy=multi-user.target

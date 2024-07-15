@@ -1,0 +1,9 @@
+# TODO: check if password is required?
+useradd --create-home --user-group vagrant --password "$(openssl passwd -6 vagrant)"
+
+env
+ls -lh $OUTPUTDIR
+install --directory --owner=vagrant --group=vagrant --mode=0700 $DESTDIR/home/vagrant/.ssh
+install --owner=vagrant --group=vagrant --mode=600 authorized_keys ${DESTDIR}/home/vagrant/.ssh/authorized_keys
+# chmod 0600 /home/vagrant/.ssh/authorized_keys
+

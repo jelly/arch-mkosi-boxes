@@ -1,0 +1,5 @@
+#!/bin/bash
+env
+echo 'GRUB_TERMINAL="serial console"' >> "${BUILDROOT}/etc/default/grub"
+echo 'GRUB_SERIAL_COMMAND="serial --speed=115200"' >> "${BUILDROOT}/etc/default/grub"
+ls -lh $BUILDROOT

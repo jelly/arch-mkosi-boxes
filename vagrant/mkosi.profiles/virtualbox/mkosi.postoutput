@@ -1,0 +1,15 @@
+#!/bin/bash
+
+IMAGE_NAME="Arch-Linux-x86_64-virtualbox-latest.box"
+
+cp "${SRCDIR}/Vagrantfile.virtualbox" "${OUTPUTDIR}/Vagrantfile"
+# TODO: static file
+echo '{"provider":"virtualbox"}' > "${OUTPUTDIR}/metadata.json"
+qemu-img convert -f raw -O vmdk "${OUTPUTDIR}/${IMAGE_ID}.raw" "${OUTPUTDIR}/packer-virtualbox.vmdk"
+sed -e "s/MACHINE_UUID/$(uuidgen)/" \
+  -e "s/DISK_UUID/$(uuidgen)/" \
+  -e "s/DISK_CAPACITY/$(qemu-img info --output=json "${OUTPUTDIR}/packer-virtualbox.vmdk" | jq '."virtual-size"')/" \
+  -e "s/UNIX/$(date +%s)/" \
+  -e "s/MAC_ADDRESS/080027AF9290/" \
+  box.ovf > "${OUTPUTDIR}/box.ovf"
+tar -C "${OUTPUTDIR}" -czf "${OUTPUTDIR}/${IMAGE_NAME}" Vagrantfile metadata.json packer-virtualbox.vmdk box.ovf

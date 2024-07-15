@@ -1,0 +1,8 @@
+#!/bin/bash
+
+IMAGE_NAME="Arch-Linux-x86_64-libvirt-latest.box"
+
+cp "${SRCDIR}/Vagrantfile.libvirt" "${OUTPUTDIR}/Vagrantfile"
+echo '{"format":"qcow2","provider":"libvirt","virtual_size":'"20"'}' > "${OUTPUTDIR}/metadata.json"
+qemu-img convert -f raw "${OUTPUTDIR}/${IMAGE_ID}.raw" -O qcow2 "${OUTPUTDIR}/box.img"
+tar -C "${OUTPUTDIR}" -czf "${OUTPUTDIR}/${IMAGE_NAME}" Vagrantfile metadata.json box.img
