@@ -1,0 +1,10 @@
+#!/bin/bash
+set -e
+env
+mount
+ls /
+btrfs subvolume create /swap
+chattr +C /swap
+chmod 0700 /swap
+btrfs filesystem mkswapfile --size 512m --uuid clear /swap/swapfile
+echo -e "/swap/swapfile none swap defaults 0 0" >> /etc/fstab
