@@ -1,7 +1,7 @@
-enable sshd
-enable systemd-networkd
-enable systemd-resolved
-enable systemd-timesyncd
-enable systemd-time-wait-sync
+enable sshd.service
+enable systemd-networkd.service
+enable systemd-resolved.service
+enable systemd-timesyncd.service
+enable systemd-time-wait-sync.service
 enable pacman-init.service
 enable reflector-init.service
