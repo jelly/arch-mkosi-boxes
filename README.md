@@ -43,3 +43,25 @@ Recommended `mkosi.local.conf` for caching build steps:
 Incremental=true
 ToolsTree=default
 ```
+
+### Testing
+
+Manually testing vagrant image for Virtualbox
+
+```
+vagrant box add archvirt /path/to/Arch-Linux-x86_64-virtualbox-latest.box
+vagrant init archvirt
+vagrant up
+```
+
+After the box has been booted:
+```
+vagrant ssh
+```
+
+To clean this up:
+
+```
+vagrant destroy
+vagrant box remove archvirt
+```
