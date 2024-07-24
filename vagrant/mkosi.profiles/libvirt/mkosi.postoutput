@@ -3,6 +3,10 @@
 IMAGE_NAME="Arch-Linux-x86_64-libvirt-latest.box"
 
 cp "${SRCDIR}/Vagrantfile.libvirt" "${OUTPUTDIR}/Vagrantfile"
-echo '{"format":"qcow2","provider":"libvirt","virtual_size":'"20"'}' > "${OUTPUTDIR}/metadata.json"
+
 qemu-img convert -f raw "${OUTPUTDIR}/${IMAGE_ID}.raw" -O qcow2 "${OUTPUTDIR}/box.img"
+# Calculate the disk size for metadata.json, this size needs to be in Gb and without a fraction so round this up.
+DISK_SIZE=$(qemu-img info --output=json "${OUTPUTDIR}/box.img" | jq '."virtual-size" / 1024 / 1024 / 1024 + 0.5 | round')
+
+echo '{"format":"qcow2","provider":"libvirt","virtual_size":'"${DISK_SIZE}"'}' > "${OUTPUTDIR}/metadata.json"
 tar -C "${OUTPUTDIR}" -czf "${OUTPUTDIR}/${IMAGE_NAME}" Vagrantfile metadata.json box.img

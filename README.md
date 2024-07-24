@@ -46,7 +46,9 @@ ToolsTree=default
 
 ### Testing
 
-Manually testing vagrant image for Virtualbox
+#### Vagrant
+
+##### Virtualbox image
 
 ```
 vagrant box add archvirt /path/to/Arch-Linux-x86_64-virtualbox-latest.box
@@ -65,3 +67,13 @@ To clean this up:
 vagrant destroy
 vagrant box remove archvirt
 ```
+
+##### Libvirt image
+
+Arch does not package the vagrant libvirt provider plugin, so the easiest way to use the [container image](https://vagrant-libvirt.github.io/vagrant-libvirt/installation.html#using-podman). (Note that the podman invocation only binds a few paths into the container)
+
+```
+vagrant.sh box add archlibvirt /path/to/Arch-Linux-x86_64-libvirt-latest.box
+```
+
+The other testing steps are the same as the Virtualbox image.
