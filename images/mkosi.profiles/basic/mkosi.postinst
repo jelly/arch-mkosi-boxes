@@ -1,1 +1,2 @@
+#!/bin/bash
 useradd --create-home --user-group arch --password "$(openssl passwd -6 arch)"
