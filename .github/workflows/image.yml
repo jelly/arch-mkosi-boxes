@@ -13,5 +13,8 @@ jobs:
       - name: setup-mkosi
         uses: systemd/mkosi@v24.3
 
+      - name: Clone repository
+        uses: actions/checkout@v4
+
       - name: build cloud image
         run: mkosi -C images --profile basic
