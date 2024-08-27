@@ -22,4 +22,6 @@ jobs:
           sudo apt-get install -y mtools
 
       - name: build cloud image
-        run: mkosi -C images --profile basic
+        run: |
+          mkosi -C images --profile basic
+          sha512sum images/Arch-Linux-x86_64-basic.raw
