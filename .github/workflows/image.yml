@@ -1,0 +1,16 @@
+name: Build mkosi image
+on:
+  pull_request:
+  push:
+    branches: [main, ci]
+
+jobs:
+  build_image:
+    name: Build image
+
+    steps:
+      - name: setup-mkosi
+        uses: systemd/mkosi@v24.3
+
+      - name: build cloud image
+        run: mkosi -C images --profile basic
