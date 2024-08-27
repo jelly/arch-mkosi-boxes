@@ -16,5 +16,10 @@ jobs:
       - name: Clone repository
         uses: actions/checkout@v4
 
+      - name: Install mtools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y mtools
+
       - name: build cloud image
         run: mkosi -C images --profile basic
