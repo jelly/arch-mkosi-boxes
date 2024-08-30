@@ -1,0 +1,3 @@
+#!/bin/bash
+sed -i -e '/INSTALLDATE/{n;s/.*/0/}' \
+          "${BUILDROOT}"/var/lib/pacman/local/*/desc
