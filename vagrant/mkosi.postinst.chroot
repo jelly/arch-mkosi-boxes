@@ -1,4 +1,2 @@
-useradd --create-home --user-group vagrant --password "$(openssl passwd -6 vagrant)"
-
-install --directory --owner=vagrant --group=vagrant --mode=0700 "${DESTDIR}/home/vagrant/.ssh"
-install --owner=vagrant --group=vagrant --mode=600 authorized_keys "${DESTDIR}/home/vagrant/.ssh/authorized_keys"
+#!/bin/bash
+useradd --user-group vagrant --password "$(openssl passwd -6 vagrant)"
