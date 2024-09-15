@@ -1,0 +1,13 @@
+image: "archlinux:latest"
+
+before_script:
+  # Get mkosi from Git?
+  - pacman -Syu --needed --noconfirm mkosi mtools grub systemd-ukify tar btrfs-progs
+
+stages:
+  - build
+
+build:
+  stage: build
+  script:
+    - mkosi -C images --profile basic
