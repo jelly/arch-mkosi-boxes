@@ -21,7 +21,14 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y mtools
 
-      - name: build cloud image
+      - name: build reproducible image
         run: |
-          mkosi -C images --profile basic
-          sha512sum images/Arch-Linux-x86_64-basic.raw
+          mkosi -C reproducible build
+          sha512sum reproducible/image.raw
+
+      - name: upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: "image.raw"
+          path: "reproducible/image.raw"
+          overwrite: true
