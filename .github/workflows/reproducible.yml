@@ -16,11 +16,11 @@ jobs:
 
       - name: Install packages
         run: |
-          pacman -Syu --noconfirm mkosi mtools grub
+          pacman -Syu --noconfirm mkosi mtools grub git
 
       - name: build reproducible image
         run: |
-          mkosi -C reproducible build"
+          mkosi -C reproducible build
           sha512sum reproducible/image.raw
 
       - name: upload artifact
