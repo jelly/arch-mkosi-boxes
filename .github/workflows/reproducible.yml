@@ -1,0 +1,41 @@
+name: Build reproducible mkosi image
+on:
+  pull_request:
+  push:
+    branches: [main, ci]
+
+jobs:
+  build_image:
+    name: Build image
+    runs-on: ubuntu-latest
+    container:
+      image: archlinux/archlinux:latest
+      options: --privileged
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+
+      - name: Install systemd with patches
+        run: |
+          printf "[systemd]\nSigLevel = Never\nServer = https://pkgbuild.com/~jelle/systemd-reproducible/" >> /etc/pacman.conf
+
+      - name: Install packages
+        run: |
+          pacman -Syu --noconfirm mtools grub git cpio dosfstools mkosi systemd/systemd systemd/systemd-ukify systemd/systemd-libs
+
+      - name: Setup mkosi
+        run: |
+          git clone https://github.com/systemd/mkosi.git && git -C mkosi checkout 3c710dd26cbe84c67e2a076627826cf704097a03 && ln -s $PWD/mkosi/bin/mkosi /usr/local/bin/mkosi
+
+      - name: build reproducible image
+        run: |
+          /usr/local/bin/mkosi -C reproducible -o github build
+          sha512sum reproducible/github.raw
+
+      - name: upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: "reproducible-image.raw"
+          path: "reproducible/github.raw"
+          overwrite: true
