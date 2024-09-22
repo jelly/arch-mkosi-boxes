@@ -16,7 +16,7 @@ jobs:
 
       - name: Install packages
         run: |
-          sudo pacman -Syu --noconfirm mkosi mtools grub
+          pacman -Syu --noconfirm mkosi mtools grub
 
       - name: build reproducible image
         run: |
