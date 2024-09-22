@@ -26,7 +26,7 @@ jobs:
 
       - name: Setup mkosi
         run: |
-          git clone https://github.com/systemd/mkosi.git && git checkout 3c710dd26cbe84c67e2a076627826cf704097a03 && ln -s $PWD/mkosi/bin/mkosi /usr/local/bin/mkosi
+          git clone https://github.com/systemd/mkosi.git && git -C mkosi checkout 3c710dd26cbe84c67e2a076627826cf704097a03 && ln -s $PWD/mkosi/bin/mkosi /usr/local/bin/mkosi
 
       - name: build reproducible image
         run: |
