@@ -8,8 +8,9 @@ jobs:
   build_image:
     name: Build image
     runs-on: ubuntu-latest
-    container: archlinux/archlinux:latest
-    options: --privileged
+    container:
+      image: archlinux/archlinux:latest
+      options: --privileged
 
     steps:
       - name: Clone repository
