@@ -7,20 +7,20 @@ on:
 jobs:
   build_image:
     name: Build image
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
+    container: archlinux/archlinux:latest
 
     steps:
       - name: Clone repository
         uses: actions/checkout@v4
 
-      - name: Install podman
+      - name: Install packages
         run: |
-          sudo apt-get update
-          sudo apt-get install -y podman
+          sudo pacman -Syu --noconfirm mkosi mtools grub
 
       - name: build reproducible image
         run: |
-          podman run --privileged --rm -v $PWD:/build -ti ghcr.io/jelly/archlinux-mkosi:latest bash -c "cd build && mkosi -C reproducible build"
+          mkosi -C reproducible build"
           sha512sum reproducible/image.raw
 
       - name: upload artifact
