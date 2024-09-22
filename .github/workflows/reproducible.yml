@@ -16,9 +16,17 @@ jobs:
       - name: Clone repository
         uses: actions/checkout@v4
 
+      - name: Install systemd with patches
+        run: |
+          printf "[systemd]\nSigLevel = Never\nServer = https://pkgbuild.com/~jelle/systemd-reproducible/" >> /etc/pacman.conf
+
       - name: Install packages
         run: |
-          pacman -Syu --noconfirm mkosi mtools grub git
+          pacman -Syu --noconfirm mtools grub git cpio dosfstools mkosi systemd/systemd systemd/systemd-ukify systemd/systemd-libs
+
+      - name: Setup mkosi
+        run: |
+          git clone https://github.com/systemd/mkosi.git && ln -s $PWD/mkosi/bin/mkosi /usr/bin/mkosi
 
       - name: build reproducible image
         run: |
