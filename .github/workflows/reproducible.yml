@@ -30,12 +30,12 @@ jobs:
 
       - name: build reproducible image
         run: |
-          /usr/local/bin/mkosi -C reproducible build
-          sha512sum reproducible/image.raw
+          /usr/local/bin/mkosi -C reproducible -o github build
+          sha512sum reproducible/github.raw
 
       - name: upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: "reproducible-image.raw"
-          path: "reproducible/image.raw"
+          path: "reproducible/github.raw"
           overwrite: true
