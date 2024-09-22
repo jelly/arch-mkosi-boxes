@@ -1,0 +1,31 @@
+name: Build reproducible mkosi image
+on:
+  pull_request:
+  push:
+    branches: [main, ci]
+
+jobs:
+  build_image:
+    name: Build image
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+
+      - name: Install podman
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y podman
+
+      - name: build reproducible image
+        run: |
+          podman run --privileged --rm -v $PWD:/build -ti ghcr.io/jelly/archlinux-mkosi:latest bash -c "cd build && mkosi -C reproducible build"
+          sha512sum reproducible/image.raw
+
+      - name: upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: "reproducible-image.raw"
+          path: "reproducible/image.raw"
+          overwrite: true
