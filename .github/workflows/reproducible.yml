@@ -26,11 +26,11 @@ jobs:
 
       - name: Setup mkosi
         run: |
-          git clone https://github.com/systemd/mkosi.git && ln -s $PWD/mkosi/bin/mkosi /usr/bin/mkosi
+          git clone https://github.com/systemd/mkosi.git && ln -s $PWD/mkosi/bin/mkosi /usr/local/bin/mkosi
 
       - name: build reproducible image
         run: |
-          mkosi -C reproducible build
+          /usr/local/bin/mkosi -C reproducible build
           sha512sum reproducible/image.raw
 
       - name: upload artifact
